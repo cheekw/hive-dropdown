@@ -1,0 +1,9 @@
+.selected-chip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  margin: 8px 2px;
+  padding: 2px 8px;
+  background-color: lightgray;
+}

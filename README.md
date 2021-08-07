@@ -1,70 +1,53 @@
-# Getting Started with Create React App
+# Hive Dropdown Demo
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Frontend Hive challenge to build a dropdown in React and/or vanilla Java
+This demo was built using create-react-app boilerplate.
 
-## Available Scripts
+## Pre-Req
+[npm](https://www.npmjs.com/) (used 7.20.5)
+[node](https://nodejs.org/en/) (used v14.17.4)
 
-In the project directory, you can run:
+## Preview
+[movie demo](demo.mp4)
 
-### `yarn start`
+### 1. Setup
+```bash
+npm install
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### 2. Run Demo
+```bash
+npm start
+```
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Usage of Component
+```jsx
+import HiveDropdown from './components';
 
-### `yarn test`
+const options = [{value: 'option1', value: 'option2', value: 'option3'}];
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+...
 
-### `yarn build`
+// In render function
+<HiveDropdown showsSelectAll={true} showsClearSelection={true}isMultiSelect={true} options={options} onChange={(data) => console.log(data)} />
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Component Props
+| Prop | Type | Description | 
+| :---: | :---: | :---: | 
+| showsSelectAll | boolean | ability to have a select-all items button. Only works when 'isMultiSelect' prop is also true. | 
+| isMultiSelect | boolean | ability to select multiple items. | 
+| showsClearSelection | boolean | ability to have a clear selection button at the right side of the dropdown (appears as an x icon). | 
+| options | Array\<Object\> | The items displayed as selectable options in the dropdown. Each item in the array atleast have {value: \<String\>}. Values should be unique. |
+| onChange | function | callback that gives data as parameter. Triggers whenever user makes a selection, clears a selection, selects all. | 
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Notes
+For normal use-cases of around ~100 items dropdown, a simple list that is completely rendered items in the would suffice. But I went with the route of assuming there will be a very large list of items since that was mentioned in the challenge.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+I took the approach of a virtualized list for most efficiency but they are difficult to work with due to constraints of needing very specific sizing. This also has a negative trade-off with the extensibility and readability of the code.
 
-### `yarn eject`
+Current virtualized list can generate a list of 1000000+ selectable items without lag as shown in the demo.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+But this would still be slow for a select-all button because the best-conceivable-time-complexity is O(n), where it has to go through n number of items and make them true. Lag is unnoticeable at 1000 items but noticeable at 10000 items when selecting all items.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Another trade-off was made to improve efficiency. Initialization of selected options is not possible (it also wasn’t listed as  component requirement). If initialization is required, it would be better to utilize an array, which could maintain ordering of selection. This trade-off was made for efficiency again. Using an object key-value map to store the selected values (no false values) instead of something like an array of booleans so that initialization, clearing, and referencing specific values is O(1). This allows speedier response from creation of the elements, clearing items, and selecting items. But this also removes ordering, so selecting items will not look as nice cause the most recently selected options can visually pop-up in any ordering.
