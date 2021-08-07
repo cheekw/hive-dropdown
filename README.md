@@ -20,6 +20,7 @@ npm install
 ```bash
 npm start
 ```
+It should be hosted onto http://localhost:3000/
 
 ## Usage of Component
 ```jsx
@@ -60,7 +61,7 @@ For normal use-cases of around ~100 items dropdown, a simple list that is comple
 
 I took the approach of a virtualized list for most efficiency but they are difficult to work with due to constraints of needing very specific sizing. This also has a negative trade-off with the extensibility and readability of the code of the actual virtualized list.
 
-The current virtualized list can generate a list of 1000000+ selectable items without lag as shown in the demo.
+The current virtualized list can generate a list of 1000000+ selectable items without lag as shown in the demo. My implementation is far from being as good as a supported library such as react-windows which employ more functionality like autosizing, overscaning etc...
 
 But this would still be slow for a select-all button because the best-conceivable-runtime is O(n), where it has to go through atleast n number of items to either make or modify them to be true for a proper returned the output. The alternative to make this usable at 1million items is to use a single boolean flag for indicating all selected (less elegant solution and output would be a flag too). For the optimized list, there is some noticable lag for the select-all button that occurs at 10000+ items but it is unnoticeable at 1000 items. The time and scaling for both optimized and unoptimized versions are around the same for select-all.
 

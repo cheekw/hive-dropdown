@@ -2,7 +2,6 @@
   "name": "hive-dropdown",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://cheekw.github.io/hive-dropdown",
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
@@ -44,7 +43,6 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-react": "^7.24.0",
-    "gh-pages": "^3.2.3",
     "prettier": "^2.3.2"
   }
 }

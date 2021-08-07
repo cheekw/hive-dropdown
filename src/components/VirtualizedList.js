@@ -16,7 +16,6 @@ const VirtualizedList = ({ numItems, itemHeight, listHeight, renderRow }) => {
         top: index * itemHeight,
         left: '0px',
         height: itemHeight,
-        lineHeight: `${itemHeight}px`,
       };
       rows.push(renderRow({ index, style }));
     }

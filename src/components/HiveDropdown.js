@@ -160,7 +160,7 @@ const HiveDropdown = ({
   return (
     <div ref={dropdownRef} className={isOpen ? 'dropdown active' : 'dropdown'}>
       <div className='dropdown-bar' onClick={handleClickBar}>
-        <div className='inner-bar'>
+    <div className='inner-bar'>
           <SelectedChips />
         </div>
         <div>
