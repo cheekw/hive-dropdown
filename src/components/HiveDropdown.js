@@ -132,7 +132,7 @@ const HiveDropdown = ({
     const handleKeyPress = (event) => handlePressEnter(event, null, handleSelectAll);
     return (
       <Option
-        tabIndex={2}
+        tabIndex={1}
         style={style}
         key={`select-all-${index}`}
         selected={false}

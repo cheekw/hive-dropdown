@@ -3,14 +3,14 @@ import HiveOptimizedDropdown from './components/HiveOptimizedDropdown';
 import HiveIcon from './assets/hive.png';
 import './App.css';
 
-const createOptions = (num) =>
+const createDemoOptions = (num) =>
   [...Array(num).keys()].map((i) => ({
     value: 'option ' + i,
     selected: i % 2 === 0,
   }));
 
-const demoOptionsBig = createOptions(1000000);
-const demoOptionsSmall = createOptions(1000);
+const demoOptionsBig = createDemoOptions(1000000);
+const demoOptionsSmall = createDemoOptions(1000);
 
 function App() {
   return (
