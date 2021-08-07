@@ -4,11 +4,11 @@ import './Option.css';
 
 const Option = memo(
   forwardRef(
-    ({ value, selected, onSelect, style }, ref) => {
+    ({ children, selected, onSelect, style }, ref) => {
       const selectedClass = selected ? 'selected' : '';
       return (
         <div ref={ref} className={`option ${selectedClass}`} onClick={onSelect} style={style}>
-          {value}
+          {children}
         </div>
       );
     },
@@ -17,7 +17,7 @@ const Option = memo(
 );
 
 Option.propTypes = {
-  value: PropTypes.string,
+  children: PropTypes.node,
   selected: PropTypes.bool,
   onSelect: PropTypes.func,
   style: PropTypes.object,

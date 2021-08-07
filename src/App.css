@@ -5,8 +5,10 @@
 }
 
 .title {
+  display: flex;
   font-size: 24px;
   margin: 24px;
+  align-items: center;
 }
 
 .container {
@@ -25,4 +27,8 @@
 
 .category {
   margin-bottom: 12px;
+}
+
+.hive-logo {
+  margin-right: 12px;
 }

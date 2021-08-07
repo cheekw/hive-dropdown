@@ -110,13 +110,9 @@ const HiveDropdown = ({
     }
     if (itemIndex < 0 && isSelectAllShown) {
       return (
-        <Option
-          key={index}
-          selected={false}
-          value='Select All...'
-          onSelect={handleSelectAll}
-          style={style}
-        />
+        <Option key={index} selected={false} onSelect={handleSelectAll} style={style}>
+          Select All...
+        </Option>
       );
     } else {
       const item = options[itemIndex];
@@ -125,10 +121,11 @@ const HiveDropdown = ({
         <Option
           key={`${item.value}-${index}`}
           selected={Boolean(selectedOptionsMap[item.value])}
-          value={item.value}
           onSelect={handleSelectOptionItem}
           style={style}
-        />
+        >
+          {item.value}
+        </Option>
       );
     }
   };

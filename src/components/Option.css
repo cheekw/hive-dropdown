@@ -18,7 +18,12 @@
   text-overflow: ellipsis;
 }
 
-.dropdown .option:hover {
-  background-color: #def2f4;
-  color: black;
+.option .selected {
+  background-color: #3b89ed;
+  color: white;
 }
+
+.dropdown .option:hover {
+    background-color: #def2f4;
+    color: black;
+  }

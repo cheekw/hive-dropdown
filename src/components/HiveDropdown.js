@@ -129,25 +129,18 @@ const HiveDropdown = ({
   }, [selectedOptions, wasOptionAdded]);
 
   const SelectAllRow = ({ index, style }) => (
-    <Option
-      style={style}
-      key={`select-all-${index}`}
-      selected={false}
-      value='Select All...'
-      onSelect={handleSelectAll}
-    />
+    <Option style={style} key={`select-all-${index}`} selected={false} onSelect={handleSelectAll}>
+      Select All...
+    </Option>
   );
 
   const ItemRow = ({ index, style }) => {
     const item = options[index];
     const selected = Boolean(selectedOptionsMap[item.value]);
     return (
-      <Option
-        style={style}
-        selected={selected}
-        value={item.value}
-        onSelect={() => handleSelectOption(item.value)}
-      />
+      <Option style={style} selected={selected} onSelect={() => handleSelectOption(item.value)}>
+        {item.value}
+      </Option>
     );
   };
 

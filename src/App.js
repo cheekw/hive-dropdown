@@ -1,6 +1,7 @@
-import './App.css';
 import HiveDropdown from './components/HiveDropdown';
 import HiveOptimizedDropdown from './components/HiveOptimizedDropdown';
+import HiveIcon from './assets/hive.png';
+import './App.css';
 
 const createOptions = (num) =>
   [...Array(num).keys()].map((i) => ({
@@ -14,10 +15,13 @@ const demoOptionsSmall = createOptions(1000);
 function App() {
   return (
     <div className='App'>
-      <span className='title'>Demo of Hive Dropdown</span>
+      <div className='title'>
+        <img className='hive-logo' src={HiveIcon} width={24} alt='Hive Logo'></img>Demo of Hive
+        Dropdown
+      </div>
       <div className='container'>
         <div className='dropdown-container'>
-          <div className='category'>OptimizedSingle Select {demoOptionsBig.length} items</div>
+          <div className='category'>Optimized Single Select {demoOptionsBig.length} items</div>
           <HiveOptimizedDropdown
             options={demoOptionsBig}
             // onChange={(data) => console.log('single select output: ' + JSON.stringify(data))}
