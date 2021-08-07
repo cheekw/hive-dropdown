@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/hive-dropdown/static/css/main.752a9687.chunk.css",
+    "main.js": "/hive-dropdown/static/js/main.ee1e63e7.chunk.js",
+    "main.js.map": "/hive-dropdown/static/js/main.ee1e63e7.chunk.js.map",
+    "runtime-main.js": "/hive-dropdown/static/js/runtime-main.d30e8958.js",
+    "runtime-main.js.map": "/hive-dropdown/static/js/runtime-main.d30e8958.js.map",
+    "static/js/2.62320dfc.chunk.js": "/hive-dropdown/static/js/2.62320dfc.chunk.js",
+    "static/js/2.62320dfc.chunk.js.map": "/hive-dropdown/static/js/2.62320dfc.chunk.js.map",
+    "static/js/3.39059572.chunk.js": "/hive-dropdown/static/js/3.39059572.chunk.js",
+    "static/js/3.39059572.chunk.js.map": "/hive-dropdown/static/js/3.39059572.chunk.js.map",
+    "index.html": "/hive-dropdown/index.html",
+    "static/css/main.752a9687.chunk.css.map": "/hive-dropdown/static/css/main.752a9687.chunk.css.map",
+    "static/js/2.62320dfc.chunk.js.LICENSE.txt": "/hive-dropdown/static/js/2.62320dfc.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.d30e8958.js",
+    "static/js/2.62320dfc.chunk.js",
+    "static/css/main.752a9687.chunk.css",
+    "static/js/main.ee1e63e7.chunk.js"
+  ]
+}
