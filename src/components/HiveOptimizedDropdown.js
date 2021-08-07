@@ -45,13 +45,17 @@ const HiveDropdown = ({
     for (let i = 0; i < options.length; i++) {
       result[options[i].value] = true;
     }
-    onChange(result);
+    if (typeof onChange == 'function') {
+      onChange(result);
+    }
     setSelectedOptionsMap(result);
   };
 
   // Unselect all items
   const handleUnselectAll = () => {
-    onChange({});
+    if (typeof onChange == 'function') {
+      onChange({});
+    }
     setSelectedOptionsMap({});
   };
 

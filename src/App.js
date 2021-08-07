@@ -30,7 +30,7 @@ function App() {
           <HiveOptimizedDropdown
             isMultiSelect={true}
             options={demoOptionsBig}
-            onChange={(data) => console.log('multi select output: ' + JSON.stringify(data))}
+            // onChange={(data) => console.log('multi select output: ' + JSON.stringify(data))}
           />
         </div>
       </div>
@@ -44,7 +44,7 @@ function App() {
             showsClearSelection
             isMultiSelect={true}
             options={demoOptionsSmall}
-            onChange={(data) => console.log('multi select output: ' + JSON.stringify(data))}
+            // onChange={(data) => console.log('multi select output: ' + JSON.stringify(data))}
           />
         </div>
       </div>
