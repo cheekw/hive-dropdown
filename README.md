@@ -1,6 +1,6 @@
 # Hive Dropdown Demo
 
-Frontend Hive challenge to build a dropdown in React and/or vanilla Java
+Frontend Hive challenge to build a dropdown in React and/or vanilla Javascript.
 This demo was built using create-react-app boilerplate.
 
 ## Pre-Req
