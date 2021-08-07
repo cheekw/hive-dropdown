@@ -48,6 +48,13 @@ const HiveDropdown = ({
   // For the dropdown top bar
   const handleClickBar = () => setIsOpen((isOpen) => !isOpen);
 
+  // For some accesibility features
+  const handlePressEnter = (event, params, func) => {
+    if (event.key === 'Enter') {
+      func(params);
+    }
+  };
+
   // Select all items
   const handleSelectAll = () => {
     const result = {};
@@ -109,19 +116,30 @@ const HiveDropdown = ({
       itemIndex = index - 1;
     }
     if (itemIndex < 0 && isSelectAllShown) {
+      const handleKeyPress = (event) => handleSelectAll(event, null, handleSelectAll);
       return (
-        <Option key={index} selected={false} onSelect={handleSelectAll} style={style}>
+        <Option
+          tabIndex={0}
+          key={index}
+          selected={false}
+          onSelect={handleSelectAll}
+          onKeyPress={handleKeyPress}
+          style={style}
+        >
           Select All...
         </Option>
       );
     } else {
       const item = options[itemIndex];
       const handleSelectOptionItem = () => handleSelectOption(item.value);
+      const handleKeyPress = (event) => handlePressEnter(event, item.value, handleSelectOptionItem);
       return (
         <Option
+          tabIndex={index + 3}
           key={`${item.value}-${index}`}
           selected={Boolean(selectedOptionsMap[item.value])}
           onSelect={handleSelectOptionItem}
+          onKeyPress={handleKeyPress}
           style={style}
         >
           {item.value}
@@ -153,9 +171,11 @@ const HiveDropdown = ({
         <div>
           {showsClearSelection && (
             <img
+              tabIndex={1}
               className='clear-icon'
               src={Clear}
-              alt='Clear all icon'
+              alt='clear all button'
+              onKeyDown={(event) => handlePressEnter(event, null, handleUnselectAll)}
               onClick={handleUnselectAll}
             />
           )}

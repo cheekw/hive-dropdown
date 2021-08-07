@@ -40,16 +40,16 @@ const HiveDropdown = ({
   useEffect(() => {
     // Effect when clicking outside of dropdown to close menu
     const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      if (isOpen && dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setIsOpen(false);
       }
     };
-    document.addEventListener('mousedown', handleClickOutside);
+    window.addEventListener('click', handleClickOutside);
     const cleanup = () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      window.removeEventListener('click', handleClickOutside);
     };
     return cleanup;
-  }, [dropdownRef]);
+  }, [isOpen, dropdownRef]);
 
   // For the Dropdown top bar
   const handleClickBar = () => setIsOpen((isOpen) => !isOpen);
@@ -128,17 +128,41 @@ const HiveDropdown = ({
     }
   }, [selectedOptions, wasOptionAdded]);
 
-  const SelectAllRow = ({ index, style }) => (
-    <Option style={style} key={`select-all-${index}`} selected={false} onSelect={handleSelectAll}>
-      Select All...
-    </Option>
-  );
+  const SelectAllRow = ({ index, style }) => {
+    const handleKeyPress = (event) => handlePressEnter(event, null, handleSelectAll);
+    return (
+      <Option
+        tabIndex={2}
+        style={style}
+        key={`select-all-${index}`}
+        selected={false}
+        onSelect={handleSelectAll}
+        onKeyPress={handleKeyPress}
+      >
+        Select All...
+      </Option>
+    );
+  };
+
+  // For some accesibility features
+  const handlePressEnter = (event, params, func) => {
+    if (event.key === 'Enter') {
+      func(params);
+    }
+  };
 
   const ItemRow = ({ index, style }) => {
     const item = options[index];
     const selected = Boolean(selectedOptionsMap[item.value]);
+    const handleKeyPress = (event) => handlePressEnter(event, item.value, handleSelectOption);
     return (
-      <Option style={style} selected={selected} onSelect={() => handleSelectOption(item.value)}>
+      <Option
+        tabIndex={index + 3}
+        style={style}
+        selected={selected}
+        onSelect={() => handleSelectOption(item.value)}
+        onKeyPress={handleKeyPress}
+      >
         {item.value}
       </Option>
     );
@@ -159,16 +183,23 @@ const HiveDropdown = ({
 
   return (
     <div ref={dropdownRef} className={isOpen ? 'dropdown active' : 'dropdown'}>
-      <div className='dropdown-bar' onClick={handleClickBar}>
-    <div className='inner-bar'>
+      <div
+        tabIndex={0}
+        className='dropdown-bar'
+        onClick={handleClickBar}
+        onKeyPress={(event) => handlePressEnter(event, null, handleClickBar)}
+      >
+        <div className='inner-bar'>
           <SelectedChips />
         </div>
         <div>
           {showsClearSelection && (
             <img
+              tabIndex={2}
               className='clear-icon'
               src={Clear}
-              alt='Clear all icon'
+              alt='clear all button'
+              onKeyDown={(event) => handlePressEnter(event, null, handleUnselectAll)}
               onClick={handleUnselectAll}
             />
           )}

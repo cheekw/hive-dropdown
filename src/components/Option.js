@@ -4,10 +4,19 @@ import './Option.css';
 
 const Option = memo(
   forwardRef(
-    ({ children, selected, onSelect, style }, ref) => {
+    ({ children, selected, onSelect, onKeyPress, style, tabIndex }, ref) => {
       const selectedClass = selected ? 'selected' : '';
+      const ariaLabel = typeof children === 'string' ? children : 'select option ' + tabIndex;
       return (
-        <div ref={ref} className={`option ${selectedClass}`} onClick={onSelect} style={style}>
+        <div
+          ref={ref}
+          tabIndex={tabIndex}
+          className={`option ${selectedClass}`}
+          ariaLabel={ariaLabel}
+          onClick={onSelect}
+          onKeyPress={onKeyPress}
+          style={style}
+        >
           {children}
         </div>
       );
@@ -18,8 +27,10 @@ const Option = memo(
 
 Option.propTypes = {
   children: PropTypes.node,
+  tabIndex: PropTypes.number,
   selected: PropTypes.bool,
   onSelect: PropTypes.func,
+  onKeyPress: PropTypes.func,
   style: PropTypes.object,
 };
 
