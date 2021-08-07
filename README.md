@@ -8,7 +8,7 @@ This demo was built using create-react-app boilerplate.
 [node](https://nodejs.org/en/) (used v14.17.4)
 
 ## Preview
-![gif demo](demo.gif | width=100)
+![gif demo](demo.gif)
 
 ### 1. Setup
 ```bash
