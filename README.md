@@ -51,7 +51,7 @@ const options = [{value: 'option1', value: 'option2', value: 'option3'}];
 | Select All | | :white_check_mark: | :white_check_mark: | 
 | Unselect All | :white_check_mark: | :white_check_mark: | 
 | Multi Select | :white_check_mark: | :white_check_mark: |
-| Autoscroll to chip |  | :white_check_mark: |
+| Autoscroll to chip | Only Strings  | :white_check_mark: |
 | Initialization of selected |  | :white_check_mark: |
 | Lazy Render (fast performance for 1mill rows) | :white_check_mark: |  |
 
@@ -64,7 +64,8 @@ Current virtualized list can generate a list of 1000000+ selectable items withou
 
 But this would still be slow for a select-all button because the best-conceivable-runtime is O(n), where it has to go through atleast n number of items to either make or modify them to be true and return the output. The alternative is a single boolean flag for all selected (less elegant solution and output would be weird). For the optimized list, lag is unnoticeable at 1000 items but noticeable at 10000 items when select-all items is used. The time and scaling for both optimized and unoptimized versions are around the same.
 
-Another trade-off was made to improve efficiency. Initialization of selected options is not possible (it also wasn’t listed as  component requirement). If initialization is required, it would be better to utilize an array, which could maintain ordering of selection. This trade-off was made for efficiency again. Using an object key-value map to store the selected values (no false values) instead of an array (like in the unoptimized version) so that initialization, clearing, and referencing specific values is O(1). This allows speedier response from creation of the elements, clearing items, and selecting items. But this also removes ordering, so selecting items will not look as nice when appended to the dropdown bar as multi-selection "chips". The most recently added/selected options can pop-up in any part of the ordering of the key-value map, which occurs the same visually when the "chip" appears.
+Another trade-off was made to improve efficiency. Initialization of selected options is not possible (it also wasn’t listed as  component requirement). If initialization is required, it would be better to utilize an array, which could maintain ordering of selection. This trade-off was made for efficiency again. Using an object key-value map to store the selected values (no false values) instead of an array (like in the unoptimized version) so that initialization, clearing, and referencing specific values is O(1). This allows speedier response from creation of the elements, clearing items, and selecting items. But this also removes ordering for insertion of non-String keys, so selecting items will not look nice when appended to the dropdown bar for integers as multi-selection "chips". The most recently added/selected options can pop-up in any part of the ordering of the key-value map, which occurs the same visually when the "chip" appears.
 
 - Uncomment onChange props in App.js to see console.log of output
 - Options object can store an id as well and so the code can easily be modified to allow for duplicates labels
+-

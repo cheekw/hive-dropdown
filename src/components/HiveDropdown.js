@@ -65,6 +65,7 @@ const HiveDropdown = ({
     }
     setSelectedOptions(selectedArray);
     setSelectedOptionsMap(selectedMap);
+    setWasOptionAdded(true);
     if (typeof onChange == 'function') {
       onChange(selectedMap);
     }
@@ -154,7 +155,7 @@ const HiveDropdown = ({
     <>
       {selectedOptions.map((itemName, i) => {
         if (selectedOptions.length > 1) {
-          return <SelectedChip key={`${itemName}-${i}`} value={itemName} />;
+          return <SelectedChip key={`${itemName}-${i}`}>{itemName}</SelectedChip>;
         } else {
           return itemName;
         }

@@ -18,9 +18,11 @@ const HiveDropdown = ({
   showsClearSelection,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [wasStringOptionAdded, setWasStringOptionAdded] = useState(false);
   const [selectedOptionsMap, setSelectedOptionsMap] = useState({});
-  const isSelectAllShown = showsSelectAll && isMultiSelect;
+  const isSelectAllShown = showsSelectAll && isMultiSelect; // if select-all option can be shown
   const dropdownRef = useRef(null);
+  const chipEndRef = useRef(null);
 
   useEffect(() => {
     // Handle Effect when clicking outside of dropdown
@@ -36,7 +38,14 @@ const HiveDropdown = ({
     return cleanup;
   }, [dropdownRef]);
 
-  // For the Dropdown top bar
+  useEffect(() => {
+    // Effect to scroll to end of chip
+    if (wasStringOptionAdded) {
+      chipEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+    }
+  }, [selectedOptionsMap, wasStringOptionAdded]);
+
+  // For the dropdown top bar
   const handleClickBar = () => setIsOpen((isOpen) => !isOpen);
 
   // Select all items
@@ -49,6 +58,7 @@ const HiveDropdown = ({
       onChange(result);
     }
     setSelectedOptionsMap(result);
+    setWasStringOptionAdded(true);
   };
 
   // Unselect all items
@@ -66,14 +76,20 @@ const HiveDropdown = ({
         if (isMultiSelect) {
           result = { ...selectedOptionsMap };
           if (selectedOptionsMap[option] === true) {
+            // remove
             delete result[option];
+            setWasStringOptionAdded(false);
           } else {
+            // add
             result[option] = true;
+            setWasStringOptionAdded(typeof option === 'string');
           }
         } else {
           if (selectedOptionsMap[option] === true) {
+            // remove
             delete result[option];
           } else {
+            // set to 1 item
             result = { [option]: true };
           }
         }
@@ -117,19 +133,26 @@ const HiveDropdown = ({
     }
   };
 
-  const selectedEntries = Object.entries(selectedOptionsMap).filter(([_key, value]) => value);
-  const selectedChips = selectedEntries.map(([itemName], i) => {
-    if (selectedEntries.length > 1) {
-      return <SelectedChip key={`${itemName}-${i}`} value={itemName} />;
-    } else {
-      return itemName;
-    }
-  });
+  const selectedOptionKeys = Object.keys(selectedOptionsMap);
+  const SelectedChips = () => (
+    <>
+      {selectedOptionKeys.map((itemName, i) => {
+        if (selectedOptionKeys.length > 1) {
+          return <SelectedChip key={`${itemName}-${i}`}>{itemName}</SelectedChip>;
+        } else {
+          return itemName;
+        }
+      })}
+      <div ref={chipEndRef} />
+    </>
+  );
 
   return (
     <div ref={dropdownRef} className={isOpen ? 'dropdown active' : 'dropdown'}>
       <div className='dropdown-bar' onClick={handleClickBar}>
-        <div className='inner-bar'>{selectedChips}</div>
+        <div className='inner-bar'>
+          <SelectedChips />
+        </div>
         <div>
           {showsClearSelection && (
             <img
@@ -146,14 +169,12 @@ const HiveDropdown = ({
           />
         </div>
       </div>
-      {
-        <VirtualizedList
-          numItems={isSelectAllShown ? options.length + 1 : options.length}
-          itemHeight={itemHeight}
-          listHeight={menuHeight}
-          renderRow={renderRow}
-        />
-      }
+      <VirtualizedList
+        numItems={isSelectAllShown ? options.length + 1 : options.length}
+        itemHeight={itemHeight}
+        listHeight={menuHeight}
+        renderRow={renderRow}
+      />
     </div>
   );
 };

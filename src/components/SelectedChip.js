@@ -3,13 +3,15 @@ import PropTypes from 'prop-types';
 import './SelectedChip.css';
 
 const SelectedChip = memo(
-  forwardRef(({ value }, ref) => (
+  forwardRef(({ children }, ref) => (
     <div ref={ref} className='selected-chip'>
-      {value}
+      {children}
     </div>
   ))
 );
 
-SelectedChip.propTypes = { value: PropTypes.string };
+SelectedChip.propTypes = {
+  children: PropTypes.node,
+};
 
 export default SelectedChip;

@@ -12,7 +12,7 @@ const Option = memo(
         </div>
       );
     },
-    (prevProps, nextProps) => prevProps.selected === nextProps.selected
+    (prevProps, nextProps) => prevProps.selected === nextProps.selected // only update when select bool changes
   )
 );
 
