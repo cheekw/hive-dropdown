@@ -22,7 +22,8 @@ const VirtualizedList = ({ numItems, itemHeight, listHeight, renderRow }) => {
     return rows;
   };
 
-  const onScroll = ({ target }) => setScrollTop(target.scrollTop);
+  // max at 0 to deal with bouncy-overscroll issue on safari
+  const onScroll = ({ target }) => setScrollTop(Math.max(0, target.scrollTop));
 
   return (
     <div className='virtualized-list' onScroll={onScroll} style={{ height: listHeight }}>

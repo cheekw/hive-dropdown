@@ -23,14 +23,14 @@ npm start
 
 ## Usage of Component
 ```jsx
-import HiveDropdown from './components';
+import HiveOptimizedDropdown from './components/HiveOptimizedDropdown';
 
 const options = [{value: 'option1', value: 'option2', value: 'option3'}];
 
 ...
 
 // In render function
-<HiveDropdown showsSelectAll={true} showsClearSelection={true}isMultiSelect={true} options={options} onChange={(data) => console.log(data)} />
+<HiveOptimizedDropdown showsSelectAll={true} showsClearSelection={true}isMultiSelect={true} options={options} onChange={(data) => console.log(data)} />
 ```
 
 ## Component Props
@@ -42,13 +42,26 @@ const options = [{value: 'option1', value: 'option2', value: 'option3'}];
 | options | Array\<Object\> | The items displayed as selectable options in the dropdown. Each item in the array atleast have {value: \<String\>}. Values should be unique. |
 | onChange | function | callback that gives data as parameter. Triggers whenever user makes a selection, clears a selection, selects all. | 
 
+## Supported Features
+
+| Feature | Optimized | Unoptimized |
+| :---: | :---: | :---: | 
+| Open/Close State | :white_check_mark: | :white_check_mark: |
+| Select / Deselect | :white_check_mark: | :white_check_mark: |
+| Select All | | :white_check_mark: | :white_check_mark: | 
+| Unselect All | :white_check_mark: | :white_check_mark: | 
+| Multi Select | :white_check_mark: | :white_check_mark: |
+| Autoscroll to chip |  | :white_check_mark: |
+| Initialization of selected |  | :white_check_mark: |
+| Lazy Render (fast performance for 1mill rows) | :white_check_mark: |  |
+
 ## Notes
 For normal use-cases of around ~100 items dropdown, a simple list that is completely rendered items in the would suffice. But I went with the route of assuming there will be a very large list of items since that was mentioned in the challenge.
 
-I took the approach of a virtualized list for most efficiency but they are difficult to work with due to constraints of needing very specific sizing. This also has a negative trade-off with the extensibility and readability of the code.
+I took the approach of a virtualized list for most efficiency but they are difficult to work with due to constraints of needing very specific sizing. This also has a negative trade-off with the extensibility and readability of the code of the actual list.
 
 Current virtualized list can generate a list of 1000000+ selectable items without lag as shown in the demo.
 
 But this would still be slow for a select-all button because the best-conceivable-time-complexity is O(n), where it has to go through n number of items and make them true. Lag is unnoticeable at 1000 items but noticeable at 10000 items when selecting all items.
 
-Another trade-off was made to improve efficiency. Initialization of selected options is not possible (it also wasn’t listed as  component requirement). If initialization is required, it would be better to utilize an array, which could maintain ordering of selection. This trade-off was made for efficiency again. Using an object key-value map to store the selected values (no false values) instead of something like an array of booleans so that initialization, clearing, and referencing specific values is O(1). This allows speedier response from creation of the elements, clearing items, and selecting items. But this also removes ordering, so selecting items will not look as nice cause the most recently selected options can visually pop-up in any ordering.
+Another trade-off was made to improve efficiency. Initialization of selected options is not possible (it also wasn’t listed as  component requirement). If initialization is required, it would be better to utilize an array, which could maintain ordering of selection. This trade-off was made for efficiency again. Using an object key-value map to store the selected values (no false values) instead of something like an array of booleans so that initialization, clearing, and referencing specific values is O(1). This allows speedier response from creation of the elements, clearing items, and selecting items. But this also removes ordering, so selecting items will not look as nice when appended in multi-select cause the most recently selected options can  pop-up in any part of the key-value map.

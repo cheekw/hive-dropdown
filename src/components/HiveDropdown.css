@@ -1,52 +1,25 @@
-.dropdown {
-  display: flex;
-  flex-direction: column;
-}
-
-.dropdown .dropdown-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: nowrap;
-  min-height: 44px;
-  background-color: whitesmoke;
-  border-radius: 4px;
-  box-sizing: border-box;
-  width: 100%;
-  white-space: nowrap;
-}
-
-.dropdown .dropdown-bar:hover {
-  opacity: 60%;
-}
-
-.dropdown .inner-bar {
-  display: flex;
-  align-items: center;
-  height: auto;
-  padding: 0px 12px;
+.dropdown .list {
+  position: relative;
+  visibility: hidden;
+  opacity: 0;
+  max-height: 0px;
   overflow: auto;
-  min-height: 44px;
-  scrollbar-width: thin;
+  -webkit-transition: max-height 0.5s ease;
+  -moz-transition: max-height 0.5s ease;
+  -o-transition: max-height 0.5s ease;
+  transition: max-height 0.5s ease;
 }
 
-.dropdown .selected {
-  background-color: #3b89ed;
-  color: white;
-}
-
-.dropdown .caret-icon {
-  width: 20px;
-  height: 20px;
-  padding: 4px;
-}
-
-.dropdown .clear-icon {
-  width: 20px;
-  height: 20px;
-  padding: 4px;
-}
-
-.dropdown .virtualized-list {
-  margin-top: 8px;
+.dropdown.active .list {
+  visibility: visible;
+  max-height: 320px;
+  height: auto;
+  opacity: 1;
+  overflow: scroll;
+  overscroll-behavior-y: none;
+  -webkit-overflow-scrolling: touch;
+  -webkit-transition: max-height 0.5s, opacity 2s, visibility 4s ease;
+  -moz-transition: max-height 0.5s, opacity 2s, visibility 4s ease;
+  -o-transition: max-height 0.5s, opacity 2s, visibility 4s ease;
+  transition: max-height 0.5s, opacity 2s, visibility 4s ease;
 }
