@@ -180,7 +180,7 @@ const HiveDropdown = ({
         </div>
       </div>
       <div className='list'>
-        {/* {isSelectAllShown && <SelectAllRow key={-1} index={-1} />} */}
+        {isSelectAllShown && <SelectAllRow key={-1} index={-1} />}
         {options.map((item, index) => (
           <ItemRow key={`${item.value}-${index}`} index={index} />
         ))}
