@@ -1,4 +1,5 @@
 .virtualized-list {
+  position: relative;
   visibility: hidden;
   opacity: 0;
   max-height: 0px;
@@ -10,13 +11,12 @@
 }
 
 .dropdown.active .virtualized-list {
+  display: block;
   visibility: visible;
-  max-height: 320px;
+  max-height: 400px;
   height: auto;
   opacity: 1;
-  overflow: scroll;
-  overscroll-behavior-y: none;
-  -webkit-overflow-scrolling: touch;
+  overflow-y: scroll;
   -webkit-transition: max-height 0.5s, opacity 2s, visibility 4s ease;
   -moz-transition: max-height 0.5s, opacity 2s, visibility 4s ease;
   -o-transition: max-height 0.5s, opacity 2s, visibility 4s ease;

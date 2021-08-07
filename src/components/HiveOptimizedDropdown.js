@@ -54,7 +54,7 @@ const HiveDropdown = ({
   // Unselect all items
   const handleUnselectAll = () => {
     if (typeof onChange == 'function') {
-      onChange({});
+      onChange();
     }
     setSelectedOptionsMap({});
   };
@@ -170,7 +170,7 @@ HiveDropdown.defaultProps = {
   isMultiSelect: false,
   options: [],
   itemHeight: 32,
-  menuHeight: 340,
+  menuHeight: 320,
   onChange: () => null,
 };
 

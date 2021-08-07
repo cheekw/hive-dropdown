@@ -13,9 +13,10 @@ const VirtualizedList = ({ numItems, itemHeight, listHeight, renderRow }) => {
     for (let index = startIndex; index <= endIndex; index++) {
       const style = {
         position: 'absolute',
-        height: itemHeight,
         top: index * itemHeight,
-        left: 0,
+        left: '0px',
+        height: itemHeight,
+        lineHeight: `${itemHeight}px`,
       };
       rows.push(renderRow({ index, style }));
     }
@@ -27,7 +28,7 @@ const VirtualizedList = ({ numItems, itemHeight, listHeight, renderRow }) => {
 
   return (
     <div className='virtualized-list' onScroll={onScroll} style={{ height: listHeight }}>
-      <div className='inner-list' style={{ height: innerHeight }}>
+      <div className='inner-list' style={{ height: innerHeight, maxHeight: innerHeight }}>
         {generateRows()}
       </div>
     </div>
