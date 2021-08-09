@@ -30,11 +30,6 @@
   scrollbar-width: thin;
 }
 
-.dropdown .selected {
-  background-color: #3b89ed;
-  color: white;
-}
-
 .dropdown .caret-icon {
   width: 20px;
   height: 20px;

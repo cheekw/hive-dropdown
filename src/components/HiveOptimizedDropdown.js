@@ -164,7 +164,12 @@ const HiveDropdown = ({
 
   return (
     <div ref={dropdownRef} className={isOpen ? 'dropdown active' : 'dropdown'}>
-      <div className='dropdown-bar' onClick={handleClickBar}>
+      <div
+        tabIndex={0}
+        className='dropdown-bar'
+        onClick={handleClickBar}
+        onKeyPress={(event) => handlePressEnter(event, null, handleClickBar)}
+      >
         <div className='inner-bar'>
           <SelectedChips />
         </div>
