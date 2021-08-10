@@ -6,7 +6,6 @@ const Option = memo(
   forwardRef(({ children, selected, onSelect, onKeyPress, style, tabIndex }, ref) => {
     const selectedClass = selected ? 'option selected' : 'option';
     const ariaLabel = typeof children === 'string' ? children : 'select option ' + tabIndex;
-    // console.log(selected, children);
     return (
       <div
         ref={ref}

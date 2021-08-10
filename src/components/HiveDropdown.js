@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Option from './Option';
-import SelectedChip from './SelectedChip';
-import ChevronDown from '../assets/chevron-down.png';
-import ChevronUp from '../assets/chevron-up.png';
-import Clear from '../assets/clear.png';
+import DropdownTemplate from './DropdownTemplate';
+import { useIsOpen, useScrollToChipEnd } from '../hooks';
+import { handlePressEnter } from '../utils';
 import './HiveDropdown.css';
 
 const HiveDropdown = ({
@@ -14,13 +13,11 @@ const HiveDropdown = ({
   showsSelectAll,
   showsClearSelection,
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [wasOptionAdded, setWasOptionAdded] = useState(false);
+  const { isOpen, dropdownRef, setIsOpen } = useIsOpen();
+  const { chipEndRef, setIsScrollAllowed } = useScrollToChipEnd();
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [selectedOptionsMap, setSelectedOptionsMap] = useState({});
   const isSelectAllShown = showsSelectAll && isMultiSelect;
-  const dropdownRef = useRef(null);
-  const chipEndRef = useRef(null);
 
   useEffect(() => {
     // initializes selectedOptions
@@ -37,20 +34,6 @@ const HiveDropdown = ({
     setSelectedOptionsMap(selectedMap);
   }, [options]);
 
-  useEffect(() => {
-    // Effect when clicking outside of dropdown to close menu
-    const handleClickOutside = (event) => {
-      if (isOpen && dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setIsOpen(false);
-      }
-    };
-    window.addEventListener('click', handleClickOutside);
-    const cleanup = () => {
-      window.removeEventListener('click', handleClickOutside);
-    };
-    return cleanup;
-  }, [isOpen, dropdownRef]);
-
   // For the Dropdown top bar
   const handleClickBar = () => setIsOpen((isOpen) => !isOpen);
 
@@ -65,7 +48,7 @@ const HiveDropdown = ({
     }
     setSelectedOptions(selectedArray);
     setSelectedOptionsMap(selectedMap);
-    setWasOptionAdded(true);
+    setIsScrollAllowed(true);
     if (typeof onChange == 'function') {
       onChange(selectedMap);
     }
@@ -109,10 +92,10 @@ const HiveDropdown = ({
         if (selectedOptionsMap[option] === true) {
           const indexOfOption = result.indexOf(option);
           result.splice(indexOfOption, 1);
-          setWasOptionAdded(false);
+          setIsScrollAllowed(false);
         } else {
           result.push(option);
-          setWasOptionAdded(true);
+          setIsScrollAllowed(true);
         }
       } else {
         result = [option];
@@ -120,13 +103,6 @@ const HiveDropdown = ({
       return result;
     });
   };
-
-  useEffect(() => {
-    // Effect to scroll to end of chip
-    if (wasOptionAdded) {
-      chipEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
-    }
-  }, [selectedOptions, wasOptionAdded]);
 
   const SelectAllRow = ({ index, style }) => {
     const handleKeyPress = (event) => handlePressEnter(event, null, handleSelectAll);
@@ -142,13 +118,6 @@ const HiveDropdown = ({
         Select All...
       </Option>
     );
-  };
-
-  // For some accesibility features
-  const handlePressEnter = (event, params, func) => {
-    if (event.key === 'Enter') {
-      func(params);
-    }
   };
 
   const ItemRow = ({ index, style }) => {
@@ -168,55 +137,25 @@ const HiveDropdown = ({
     );
   };
 
-  const SelectedChips = () => (
-    <>
-      {selectedOptions.map((itemName, i) => {
-        if (selectedOptions.length > 1) {
-          return <SelectedChip key={`${itemName}-${i}`}>{itemName}</SelectedChip>;
-        } else {
-          return itemName;
-        }
-      })}
-      <div ref={chipEndRef} />
-    </>
+  const menuList = (
+    <div className='list'>
+      {isSelectAllShown && <SelectAllRow key={-1} index={-1} />}
+      {options.map((item, index) => (
+        <ItemRow key={`${item.value}-${index}`} index={index} />
+      ))}
+    </div>
   );
 
   return (
-    <div ref={dropdownRef} className={isOpen ? 'dropdown active' : 'dropdown'}>
-      <div
-        tabIndex={0}
-        className='dropdown-bar'
-        onClick={handleClickBar}
-        onKeyPress={(event) => handlePressEnter(event, null, handleClickBar)}
-      >
-        <div className='inner-bar'>
-          <SelectedChips />
-        </div>
-        <div>
-          {showsClearSelection && (
-            <img
-              tabIndex={2}
-              className='clear-icon'
-              src={Clear}
-              alt='clear all button'
-              onKeyDown={(event) => handlePressEnter(event, null, handleUnselectAll)}
-              onClick={handleUnselectAll}
-            />
-          )}
-          <img
-            className='caret-icon'
-            src={isOpen ? ChevronUp : ChevronDown}
-            alt='dropdown caret icon'
-          />
-        </div>
-      </div>
-      <div className='list'>
-        {isSelectAllShown && <SelectAllRow key={-1} index={-1} />}
-        {options.map((item, index) => (
-          <ItemRow key={`${item.value}-${index}`} index={index} />
-        ))}
-      </div>
-    </div>
+    <DropdownTemplate
+      ref={{ dropdownRef: dropdownRef, chipEndRef: chipEndRef }}
+      isOpen={isOpen}
+      showsClearSelection={showsClearSelection}
+      handleUnselectAll={handleUnselectAll}
+      selectedOptions={selectedOptions}
+      handleClickBar={handleClickBar}
+      menuList={menuList}
+    />
   );
 };
 

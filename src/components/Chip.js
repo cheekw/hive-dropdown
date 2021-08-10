@@ -1,8 +1,8 @@
 import React, { memo, forwardRef } from 'react';
 import PropTypes from 'prop-types';
-import './SelectedChip.css';
+import './Chip.css';
 
-const SelectedChip = memo(
+const Chip = memo(
   forwardRef(({ children }, ref) => (
     <div ref={ref} className='selected-chip'>
       {children}
@@ -10,8 +10,8 @@ const SelectedChip = memo(
   ))
 );
 
-SelectedChip.propTypes = {
+Chip.propTypes = {
   children: PropTypes.node,
 };
 
-export default SelectedChip;
+export default Chip;
