@@ -3,26 +3,24 @@ import PropTypes from 'prop-types';
 import './Option.css';
 
 const Option = memo(
-  forwardRef(
-    ({ children, selected, onSelect, onKeyPress, style, tabIndex }, ref) => {
-      const selectedClass = selected ? 'selected' : '';
-      const ariaLabel = typeof children === 'string' ? children : 'select option ' + tabIndex;
-      return (
-        <div
-          ref={ref}
-          tabIndex={tabIndex}
-          className={`option ${selectedClass}`}
-          ariaLabel={ariaLabel}
-          onClick={onSelect}
-          onKeyPress={onKeyPress}
-          style={style}
-        >
-          {children}
-        </div>
-      );
-    },
-    (prevProps, nextProps) => prevProps.selected === nextProps.selected // only update when select bool changes
-  )
+  forwardRef(({ children, selected, onSelect, onKeyPress, style, tabIndex }, ref) => {
+    const selectedClass = selected ? 'selected' : '';
+    const ariaLabel = typeof children === 'string' ? children : 'select option ' + tabIndex;
+    return (
+      <div
+        ref={ref}
+        tabIndex={tabIndex}
+        className={`option ${selectedClass}`}
+        ariaLabel={ariaLabel}
+        onClick={onSelect}
+        onKeyPress={onKeyPress}
+        style={style}
+      >
+        {children}
+      </div>
+    );
+  }),
+  (prevProps, nextProps) => prevProps.selected === nextProps.selected // only update when select bool changes
 );
 
 Option.propTypes = {
