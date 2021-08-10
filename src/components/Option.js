@@ -4,14 +4,14 @@ import './Option.css';
 
 const Option = memo(
   forwardRef(({ children, selected, onSelect, onKeyPress, style, tabIndex }, ref) => {
-    const selectedClass = selected ? 'selected' : '';
+    const selectedClass = selected ? 'option selected' : 'option';
     const ariaLabel = typeof children === 'string' ? children : 'select option ' + tabIndex;
     return (
       <div
         ref={ref}
         tabIndex={tabIndex}
-        className={`option ${selectedClass}`}
-        ariaLabel={ariaLabel}
+        className={selectedClass}
+        aria-label={ariaLabel}
         onClick={onSelect}
         onKeyPress={onKeyPress}
         style={style}
