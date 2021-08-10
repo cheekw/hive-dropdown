@@ -11053,6 +11053,7 @@
   "version" "0.11.0"
 
 "type-fest@^0.13.1":
+  "integrity" "sha512-4dbzIzqvjtgiM5rw1k5rEHtBANKmdudhGyBEajN01fEyhaAIhsoKNy6y7+IN93IfpFtwY9iqi7kD+xwKhQsNJA=="
   "version" "0.8.1"
 
 "type-fest@^0.20.2":
